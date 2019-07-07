@@ -5,15 +5,16 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
-import java.util.TreeSet;
 
 public class Solution {
 
 	public static void main(String[] args) throws IOException {
-		
+
 		BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
 		StringTokenizer stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 		BufferedWriter bufferedWriter = new BufferedWriter(
@@ -23,27 +24,42 @@ public class Solution {
 		int size_elements_B = Integer.parseInt(stringTokenizer.nextToken());
 		int size_elements_C = Integer.parseInt(stringTokenizer.nextToken());
 
-		Set<Integer> set_A = new TreeSet<Integer>();
-		Set<Integer> set_B = new TreeSet<Integer>();
-		Set<Integer> set_C = new TreeSet<Integer>();
+		List<Integer> list_A = new ArrayList<Integer>();
+		List<Integer> list_B = new ArrayList<Integer>();
+		List<Integer> list_C = new ArrayList<Integer>();
 
+		Set<Integer> checkDuplicates = new HashSet<Integer>();
 		stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 		for (int i = 0; i < size_elements_A; i++) {
-			set_A.add(Integer.parseInt(stringTokenizer.nextToken()));
+			int element = Integer.parseInt(stringTokenizer.nextToken());
+			if (!checkDuplicates.contains(element)) {
+				list_A.add(element);
+				checkDuplicates.add(element);
+			}
 		}
 
+		checkDuplicates.clear();
 		stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 		for (int i = 0; i < size_elements_B; i++) {
-			set_B.add(Integer.parseInt(stringTokenizer.nextToken()));
+			int element = Integer.parseInt(stringTokenizer.nextToken());
+			if (!checkDuplicates.contains(element)) {
+				list_B.add(element);
+				checkDuplicates.add(element);
+			}
 		}
 
+		checkDuplicates.clear();
 		stringTokenizer = new StringTokenizer(bufferedReader.readLine());
 		for (int i = 0; i < size_elements_C; i++) {
-			set_C.add(Integer.parseInt(stringTokenizer.nextToken()));
+			int element = Integer.parseInt(stringTokenizer.nextToken());
+			if (!checkDuplicates.contains(element)) {
+				list_C.add(element);
+				checkDuplicates.add(element);
+			}
 		}
 		bufferedReader.close();
 
-		long result = find_numberOfSpecialTriplets(set_A, set_B, set_C);
+		long result = find_numberOfSpecialTriplets(list_A, list_B, list_C);
 		bufferedWriter.write(result + "\n");
 
 		bufferedWriter.flush();
@@ -58,15 +74,15 @@ public class Solution {
 	 * list_C.
 	 * 
 	 * At each iteration through list_B, a smaller and smaller part of list_A and
-	 * list_B is searched.
+	 * list_C is searched.
 	 * 
 	 * @return A long value, representing the total number of special triplets.
 	 */
-	public static long find_numberOfSpecialTriplets(Set<Integer> set_A, Set<Integer> set_B, Set<Integer> set_C) {
+	public static long find_numberOfSpecialTriplets(List<Integer> list_A, List<Integer> list_B, List<Integer> list_C) {
 
-		List<Integer> list_A = new ArrayList<Integer>(set_A);
-		List<Integer> list_B = new ArrayList<Integer>(set_B);
-		List<Integer> list_C = new ArrayList<Integer>(set_C);
+		Collections.sort(list_A);
+		Collections.sort(list_B);
+		Collections.sort(list_C);
 
 		int index_A = list_A.size() - 1;
 		int index_C = list_C.size() - 1;
@@ -85,8 +101,8 @@ public class Solution {
 	 * The method applies binary search to find the element with value that is equal
 	 * to, or immediately below, the key.
 	 * 
-	 * @return The index of this element. If there are no elements with value
-	 *         that is equal to, or less than, the key, then "-1" is returned.
+	 * @return The index of this element. If there are no elements with value that
+	 *         is equal to, or less than, the key, then "-1" is returned.
 	 */
 	private static int binarySearch_findValue_equalTo_or_immediatelyBelow_Key(List<Integer> list, int key) {
 		int lowerLimit = 0;
