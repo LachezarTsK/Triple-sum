@@ -57,8 +57,8 @@ public class Solution {
 	 * Binary search is applied in order to avoid iteration through list_A and
 	 * list_C.
 	 * 
-	 * At each iteration through list_B, the binary search is applied to a smaller
-	 * part of list_A and list_C.
+	 * At each iteration through list_B, the binary search is applied to an ever
+	 * smaller part of list_A and list_C.
 	 * 
 	 * @return A long value, representing the total number of special triplets.
 	 */
